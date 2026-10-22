@@ -1,0 +1,67 @@
+ESTADIO INVADIDO - Referencias da Aula 09
+Ygor de Andrade - RGM 802.517
+Modo: Horda | Tipo: Territorio
+
+Documentacao oficial da Godot e tutoriais consultados para construir a vida,
+o dano, a horda, a zona e o fim da partida. Serve de base para citar a origem
+do codigo (um comentario de uma linha no trecho que veio daqui).
+
+Versao usada: Godot 4.7
+
+
+1) CAMADAS DE COLISAO (Layer e Mask)
+   Onde no jogo: jogador na camada 2, bola na 3, mundo na 1; a Hurtbox com a
+   Mask so na camada 3; nomes das camadas em project.godot.
+   - Physics introduction (secao Collision layers and masks):
+	 https://docs.godotengine.org/en/stable/tutorials/physics/physics_introduction.html
+
+2) MOVIMENTO DO JOGADOR (CharacterBody2D, move_and_slide)
+   Onde no jogo: Scripts/jogador.gd, andar nas quatro direcoes preso aos muros.
+   - Using CharacterBody2D:
+	 https://docs.godotengine.org/en/stable/tutorials/physics/using_character_body_2d.html
+
+3) AREA2D E DETECCAO DE TOQUE (Hurtbox, has_overlapping_bodies)
+   Onde no jogo: a Hurtbox do jogador sente as bolas; a Zona sente o jogador
+   (get_overlapping_bodies).
+   - Using Area2D:
+	 https://docs.godotengine.org/en/stable/tutorials/physics/using_area_2d.html
+   - Referencia da classe Area2D (metodos has_overlapping_bodies / get_overlapping_bodies):
+	 https://docs.godotengine.org/en/stable/classes/class_area2d.html
+
+4) TIMER E SINAIS (horda e zona que muda de lugar)
+   Onde no jogo: os temporizadores em Scripts/main.gd que soltam bolas e trocam
+   a zona de lugar.
+   - Classe Timer:
+	 https://docs.godotengine.org/en/stable/classes/class_timer.html
+   - Usar sinais (connect / timeout):
+	 https://docs.godotengine.org/en/stable/getting_started/step_by_step/signals.html
+
+5) TROCA DE CENA e FIM DA PARTIDA (vitoria e derrota)
+   Onde no jogo: vencer() e perder() em Scripts/main.gd e o Enter para recomecar
+   em Scripts/fim.gd (change_scene_to_file).
+   - SceneTree.change_scene_to_file (referencia da classe):
+	 https://docs.godotengine.org/en/stable/classes/class_scenetree.html
+   - Cena principal / game over e recomecar:
+	 https://docs.godotengine.org/en/stable/getting_started/first_2d_game/05.the_main_game_scene.html
+   -trocar de cena na Godot 4:
+	 https://gamedevacademy.org/godot-change-scenes-tutorial/
+
+6) INVENCIBILIDADE DE 1 SEGUNDO (await timer, piscar)
+   Onde no jogo: levar_dano() em Scripts/jogador.gd, espera com
+   get_tree().create_timer(1.0).timeout.
+   - Classe SceneTreeTimer (timer de uso unico):
+	 https://docs.godotengine.org/en/stable/classes/class_scenetreetimer.html
+
+7) BOLA QUICANTE (RigidBody2D + PhysicsMaterial bounce)
+   Onde no jogo: scenes/bola.tscn (bounce 1, sem atrito, sem gravidade) e
+   Scripts/bola.gd (mantem a velocidade constante nos quiques).
+   - Classe PhysicsMaterial (bounce / friction):
+	 https://docs.godotengine.org/en/stable/classes/class_physicsmaterial.html
+   - Classe RigidBody2D:
+	 https://docs.godotengine.org/en/stable/classes/class_rigidbody2d.html
+   - Tutorial - fisica 2D na Godot (kodeco/raywenderlich):
+	 https://www.kodeco.com/44858551-getting-started-with-2d-physics-in-godot
+
+8) (inimigos por Timer, HUD, game over)
+   - "Your first 2D game" (Dodge the Creeps)
+	 https://docs.godotengine.org/en/stable/getting_started/first_2d_game/index.html

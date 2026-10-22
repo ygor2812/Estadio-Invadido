@@ -1,11 +1,12 @@
 extends Node2D
-## Estádio Invadido (aula 8). O cenário (chão, muros, jogador, zona e HUD)
-## é montado na cena main.tscn. Este script cuida das bolas, da zona e do tempo.
-## Objetivo: somar 60 s dentro da zona amarela.
+## Estadio Invadido. O cenario (chao, muros, jogador, zona e HUD)
+## e' montado na cena main.tscn. Este script cuida das bolas, da zona e do tempo.
+## Objetivo (Territorio): somar 60 s dentro da zona amarela.
+## Aula 09: fim da partida -- vence aos 60 s na zona, perde quando a vida acaba.
 
 const BolaCena = preload("res://scenes/bola.tscn")
 
-const ARENA := Rect2(24, 24, 1104, 600) # parte caminhável (dentro dos muros)
+const ARENA := Rect2(24, 24, 1104, 600) # parte caminhavel (dentro dos muros)
 const TEMPO_META := 60.0
 const ZONA_INTERVALO := 7.0
 const BOLAS_INICIAIS := 3
@@ -16,6 +17,7 @@ const BOLA_INTERVALO := 5.0
 @onready var zona: Area2D = $Zona
 @onready var bolas: Node2D = $Bolas
 @onready var contador: Label = $HUD/Contador
+@onready var texto_vida: Label = $HUD/Vida
 
 var progresso := 0.0
 var decorrido := 0.0
@@ -28,7 +30,7 @@ func _ready() -> void:
 	randomize()
 	zona.visible = false
 
-	# espera a física registrar os muros antes de consultar espaço livre
+	# espera a fisica registrar os muros antes de consultar espaco livre
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 
@@ -56,6 +58,9 @@ func _physics_process(delta: float) -> void:
 	zona.dentro = dentro
 	if dentro:
 		progresso = minf(progresso + delta, TEMPO_META)
+		if progresso >= TEMPO_META:
+			vencer()
+			return
 
 	# novas bolas invadem o campo
 	timer_bola -= delta
@@ -67,6 +72,18 @@ func _physics_process(delta: float) -> void:
 
 func _process(_delta: float) -> void:
 	contador.text = "%.1f / %d s" % [progresso, int(TEMPO_META)]
+	texto_vida.text = "Vida: %d" % jogador.vida
+
+
+func vencer() -> void:
+	iniciado = false
+	# call_deferred: troca de cena so' no fim do quadro, quando a fisica terminou.
+	get_tree().change_scene_to_file.call_deferred("res://scenes/vitoria.tscn")
+
+
+func perder() -> void:
+	iniciado = false
+	get_tree().change_scene_to_file.call_deferred("res://scenes/derrota.tscn")
 
 
 func _livre(pos: Vector2, raio: float) -> bool:
