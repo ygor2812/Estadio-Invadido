@@ -1,10 +1,6 @@
 extends Node2D
-## Estadio Invadido. O cenario (chao, muros, jogador, zona e HUD)
-## e' montado na cena main.tscn. Este script cuida das bolas, da zona e do tempo.
-## Objetivo (Territorio): somar 60 s dentro da zona amarela.
-## Aula 09: fim da partida -- vence aos 60 s na zona, perde quando a vida acaba.
 
-const BolaCena = preload("res://scenes/bola.tscn")
+const BolaCena = preload("res://entities/bola.tscn")
 
 const ARENA := Rect2(24, 24, 1104, 600) # parte caminhavel (dentro dos muros)
 const TEMPO_META := 60.0

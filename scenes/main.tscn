@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cxjfoys2f6wtr"]
 
 [ext_resource type="Script" uid="uid://bbb4c2t00punb" path="res://Scripts/main.gd" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/jogador.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://entities/jogador.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/zona.tscn" id="3"]
 
 [sub_resource type="RectangleShape2D" id="1"]

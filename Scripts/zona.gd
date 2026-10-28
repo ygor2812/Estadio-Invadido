@@ -1,6 +1,4 @@
 extends Area2D
-## Zona amarela. O tamanho vem do CollisionShape2D (círculo) em zona.tscn
-## e o visual (Preenchimento + Borda) acompanha esse tamanho.
 
 const RAIO_BASE := 90.0 # raio do desenho em zona.tscn
 
@@ -14,14 +12,11 @@ var dentro: bool = false:
 @onready var visual: Node2D = $Visual
 @onready var preenchimento: Polygon2D = $Visual/Preenchimento
 
-
 func _ready() -> void:
 	visual.scale = Vector2.ONE * (raio() / RAIO_BASE)
 
-
 func raio() -> float:
 	return (forma.shape as CircleShape2D).radius
-
 
 func jogador_dentro() -> bool:
 	for corpo in get_overlapping_bodies():

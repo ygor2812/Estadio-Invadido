@@ -1,7 +1,4 @@
 extends CharacterBody2D
-## Jogador visto de cima. Anda com WASD ou setas e e' bloqueado pelos muros.
-## (Colisao, grupo "jogador", modo flutuante e o visual estao na cena jogador.tscn.)
-## Aula 09: ganhou vida. Tomar bolada tira 1 de vida, com 1 s de invencibilidade.
 
 const VELOCIDADE := 300.0
 
