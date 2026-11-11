@@ -6,8 +6,8 @@ const ARENA := Rect2(24, 24, 1104, 600) # parte caminhavel (dentro dos muros)
 const TEMPO_META := 60.0
 const ZONA_INTERVALO := 7.0
 const BOLAS_INICIAIS := 3
-const BOLAS_MAX := 14
-const BOLA_INTERVALO := 5.0
+const BOLAS_MAX := 10
+const BOLA_INTERVALO := 7.0
 
 @onready var jogador: CharacterBody2D = $Jogador
 @onready var zona: Area2D = $Zona
@@ -119,7 +119,7 @@ func _nova_bola() -> void:
 			pos = p
 			break
 
-	var v := minf(170.0 + decorrido * 1.5, 340.0) * randf_range(0.9, 1.15)
+	var v := minf(170.0 + decorrido * 0.6, 210.0) * randf_range(0.9, 1.15)
 	var b = BolaCena.instantiate()
 	b.raio = raio
 	b.velocidade = v

@@ -30,6 +30,31 @@ offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.1843, 0.4902, 0.2275, 1)
 
+[node name="Campo" type="Node2D" parent="." unique_id=1087785304]
+
+[node name="Quadra" type="Line2D" parent="Campo" unique_id=1765998783]
+points = PackedVector2Array(44, 44, 1108, 44, 1108, 604, 44, 604)
+closed = true
+width = 4.0
+default_color = Color(0.9, 0.96, 0.92, 0.65)
+
+[node name="PrisaoEsq" type="Line2D" parent="Campo" unique_id=735009603]
+points = PackedVector2Array(44, 44, 154, 44, 154, 604, 44, 604)
+closed = true
+width = 4.0
+default_color = Color(0.9, 0.96, 0.92, 0.65)
+
+[node name="PrisaoDir" type="Line2D" parent="Campo" unique_id=659161659]
+points = PackedVector2Array(998, 44, 1108, 44, 1108, 604, 998, 604)
+closed = true
+width = 4.0
+default_color = Color(0.9, 0.96, 0.92, 0.65)
+
+[node name="LinhaMeio" type="Line2D" parent="Campo" unique_id=184744722]
+points = PackedVector2Array(576, 44, 576, 604)
+width = 4.0
+default_color = Color(0.9, 0.96, 0.92, 0.65)
+
 [node name="Muros" type="Node2D" parent="." unique_id=438374540]
 
 [node name="ParedeCima" type="StaticBody2D" parent="Muros" unique_id=1200206738]

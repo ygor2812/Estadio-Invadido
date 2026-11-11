@@ -8,7 +8,7 @@ const TEMPO_MINIMO_CACA := 0.8
 const FORCA_CACA := 2.5
 const TEMPO_CACANDO := 3.0
 const TEMPO_CANSADA := 1.5
-const MAX_CACANDO := 3
+const MAX_CACANDO := 2
 
 enum Estado { SURGINDO, QUICANDO, CACANDO, CANSADA }
 
