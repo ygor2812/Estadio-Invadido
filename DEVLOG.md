@@ -19,3 +19,8 @@ como resolvi: Foi usado distancias diferentes para começar e para desistir, a b
 O que fiz: rebalanceei a dificuldade, que estava impossível depois dos 30 segundos e fiz o desenho de um campo no mapa usando Line2d.
 O que travou: As bolas acabavam ficando mais rapidas que o jogador quando estavam no estado de caça, deixando impossivel de vencer.
 Como resolvi: baixei o teto de velocidade de 340 para 210, também reduzi a aceleração de 1,5 para 0,6 por segundo, o máximo de bolas de 14 para 10 e as caçadoras simultâneas de 3 para 2.
+
+#Aula 12 --11/11
+O que fiz: Exportei o jogo para formato web e publiquei no github pages
+o que travou: ao abrir o index.html com duplo clique, o jogo parava no logo da Godot com o erro "Failed to fetch".
+Como resolvi: Usei o auxilio de um chat IA, o jogo precisava ter um servidor HTTP, testei com servidor local e depois publiquei na pasta docs pelo GitHub Pages 

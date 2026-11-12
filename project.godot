@@ -24,6 +24,10 @@ config/icon="res://icon.svg"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[editor]
+
+import/use_multiple_threads=false
+
 [layer_names]
 
 2d_physics/layer_1="mundo"
