@@ -82,47 +82,60 @@ func perder() -> void:
 	get_tree().change_scene_to_file.call_deferred("res://scenes/derrota.tscn")
 
 
+# Responde uma pergunta: cabe um circulo desse tamanho nessa posicao sem encostar em nada?
 func _livre(pos: Vector2, raio: float) -> bool:
-	var forma := CircleShape2D.new()
+	var forma := CircleShape2D.new()              # circulo imaginario: nao entra na cena
 	forma.radius = raio
-	var q := PhysicsShapeQueryParameters2D.new()
-	q.shape = forma
-	q.transform = Transform2D(0.0, pos)
-	q.collision_mask = 1
-	q.exclude = [jogador.get_rid()]
+	var q := PhysicsShapeQueryParameters2D.new()  # a "pergunta" que vai pra fisica
+	q.shape = forma                               # com qual forma
+	q.transform = Transform2D(0.0, pos)           # em qual posicao (sem rotacao)
+	q.collision_mask = 1                          # so olha a camada mundo: muros e blocos
+	q.exclude = [jogador.get_rid()]               # ignora o jogador, senao ele bloquearia tudo
+	# intersect_shape devolve o que seria atingido; o 1 e "pare no primeiro que achar".
+	# Lista vazia = nada no caminho = o lugar esta livre.
 	return get_world_2d().direct_space_state.intersect_shape(q, 1).is_empty()
 
 
+# Sorteia um lugar novo pra zona: livre de obstaculo e longe de onde ela estava.
 func _ponto_livre_zona(evitar: Vector2) -> Vector2:
-	var raio_zona: float = zona.raio()
+	var raio_zona: float = zona.raio()        # le o tamanho real da colisao em zona.tscn
+	# Encolhe a arena na medida do raio. O que se sorteia e o CENTRO do circulo,
+	# entao sem isso metade da zona poderia nascer enterrada na parede.
 	var area := ARENA.grow(-raio_zona)
-	for i in 80:
-		var p := Vector2(
+	for i in 80:                              # tentativa e erro, ate 80 chutes
+		var p := Vector2(                     # sorteia um ponto dentro da area encolhida
 			randf_range(area.position.x, area.end.x),
 			randf_range(area.position.y, area.end.y))
 		if p.distance_to(evitar) < 280.0:
-			continue
-		if _livre(p, raio_zona * 0.8):
-			return p
-	return evitar
+			continue                          # perto demais do lugar antigo: chuta outro
+		if _livre(p, raio_zona * 0.8):        # 0.8 da uma folga: encostar de leve tudo bem
+			return p                          # achou um bom: encerra aqui
+	return evitar                             # nenhum serviu: deixa a zona onde esta
 
 
+# Cria uma bola nova e solta em campo, longe do jogador.
 func _nova_bola() -> void:
-	var raio := randf_range(10.0, 16.0)
-	var area := ARENA.grow(-(raio + 4.0))
-	var pos := area.get_center()
-	for i in 60:
+	var raio := randf_range(10.0, 16.0)       # cada bola nasce com um tamanho diferente
+	var area := ARENA.grow(-(raio + 4.0))     # encolhe a arena pro raio caber, com 4 de folga
+	var pos := area.get_center()              # plano B: se nenhum sorteio servir, nasce no meio
+	for i in 60:                              # tentativa e erro, até 60 chutes
 		var p := Vector2(
 			randf_range(area.position.x, area.end.x),
 			randf_range(area.position.y, area.end.y))
+		# Tem que ser longe do jogador (pra não nascer na cara dele) e em lugar livre.
 		if p.distance_to(jogador.position) > 200.0 and _livre(p, raio + 2.0):
 			pos = p
-			break
+			break                             # achou: para de procurar
 
+	# A dificuldade que cresce: começa em 170 e sobe 0,6 por segundo de partida, até o teto
+	# de 210. O randf_range dá 10% de variação pras bolas não ficarem idênticas.
+	# O teto importa: a bola caçando anda 1,15x, ou seja 241, que é 80% dos 300 do jogador.
+	# Assim dá sempre pra fugir dela.
 	var v := minf(170.0 + decorrido * 0.6, 210.0) * randf_range(0.9, 1.15)
-	var b = BolaCena.instantiate()
+
+	var b = BolaCena.instantiate()            # cria a bola a partir de entities/bola.tscn
 	b.raio = raio
 	b.velocidade = v
-	b.vel = Vector2.from_angle(randf() * TAU) * v
+	b.vel = Vector2.from_angle(randf() * TAU) * v   # TAU = volta inteira: direção sorteada
 	b.position = pos
 	bolas.add_child(b)
